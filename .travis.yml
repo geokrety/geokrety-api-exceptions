@@ -1,0 +1,31 @@
+language: python
+python:
+  - '2.7'
+cache: pip
+
+install:
+  - pip install coverage
+script:
+  - nosetests tests/ -v --with-coverage --with-id --nologcapture --stop
+after_success:
+  - bash <(curl -s https://codecov.io/bash)
+  - python setup.py sdist
+
+deploy:
+  - provider: releases
+    api_key:
+      secure: GNkTHd84fZ9qFKCNUhrpMIlKdCbrNUR2bbPVvS/lyCbrkbe1fdFUqhkLqYKIgqAWuoXTvftzz3nm/z2V8oSWnVg1x9Tcbp+RPW5NXAUAmJpQuyQqxO6D/MRO6UPQpHgUByQfq5iVBGIdQLHpBEa43tkLiAdQ4wElWsH0bGJL1o9Gb2oygiIx60HpLeDHYh6raDzKLpzaFCG2uTMTyFFxaG7+MUVaMdE8+RqqKwZoFuA5W2DIZVocYLZDHr7j/WbZNlGHZC+MeFPcaGep47vZV+bkf36GZ9uB7MWBDAXbp6aR8xFQoXbdLZhX7vTK6HQUqcKjK8DWU8FfCS1vBulXMcqvVljtmLT/cMdaTJhgAruZocMRvzhHHOZwyJyyxHCJUm+r6bOoE6Ilq0LiHnJo5CELx5PRg2WRoBNPy+wLm2XsnPfB9f2BZje73N3FV/hdC50PNGt9ozaZ44mGAC4nJP8uMlkla3pRaMklqpRdXtT/wG6fy8fArgxlhGNOow2wDqkVwUUtLDvAeSHWnnv8oRuDxKLRzyYQBlgfkDhle4Y4tDhvCvYswZSEHTDiFdYnnCjYJTd+bOGDlCaWet0YBBxSH1LjycrCXbPMhYecbX8c3/OMhfIfne2mtoHzX3VT0GkLpBfOULLHslApitQ2heSzgxuiuOlY3FK/AEcXGX0=
+    file_glob: true
+    file: dist/geokrety_api_exceptions-*.tar.gz
+    skip_cleanup: true
+    on:
+      tags: true
+      repo: geokrety/geokrety-api-exceptions
+
+  - provider: pypi
+    user: geokrety-bot
+    password:
+      secure: CaD0PvuGUrrVcXl4Wb1/Ho33gaciNInHaaHsbgBQlYkSNWkKwmQWjHb943qSMCLWvDyYBBvnYJlBPvsfyEvNFwJQG+pDM5NbVAcI40gFqTzNWIcsLpSawDhi+2NpWLbapNNjGFPmPqLQLEoWh+mrxgWHvKvvTMc1iCVXO83bszJBXbQ8XVZ+j2PfzA9TUQNvbKYmOgEheavRcx6D0KaFlj1HE2ZAI05tDzq9nA1jjgQFEsOcMh9o4e62NRNhwQKn+iaxGCv+RHneZZ0fKTgJMrEAnUMZFkS2eNjKqSuVwq7IKxFkXWmTGxN+VwVww2I48Hu3ZaDH2KwZsSVvnC3Ap2Gzfvy9smCgH673iqzWO4Q5XzBXryPzw4MSBItKftRKYUTW0SYZP69wqknxo1xvigfhb69kuRslid9HDKBQXPh0tS6tmfLjfu1/4rLTPX2y5x1/lHnYNt9xklJbMnmPujPUWLrFNcXHx5pVWp7OwDDv7qpDR/7uZRHX2G1G7XEg3SCaY37GV8pPHj84qZlpfT0PFUQtaN9CasC01JAXDm+kEowaQ4+HcZ/V3M/ZCxxFOGqhQX1xmD+YLNCZqMWBQEU25tLY79X71hRZhsiyeOcaYEuKJIAtn1hp2lwZUKuTmDEOnx0uFV/fHAYRJyA0UH6+txVm9KOTbF8+aM/c7n0=
+    on:
+      tags: true
+      repo: geokrety/geokrety-api-exceptions
